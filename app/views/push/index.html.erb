@@ -1,0 +1,11 @@
+
+<form class="form-horizontal" action="/push/new" method="post" >
+              <%= token_tag nil %>
+              Question:
+              <input type='text' name='question' value = '<%= @post.question%>'>
+              User_id:
+              <input type='text' name='user_id' value = '<%= @post.user%>'>
+              Answer:
+              <input type='text' name='answer' value = '<%= @post.answer%>'>
+              <button type='Submit' class = 'btn btn-primary' id = 'push'>Push</button>
+ </form>
