@@ -13,6 +13,9 @@ skip_before_action :verify_authenticity_token
 
 		#@nonce = RestClient.get(endpoint,headers)
 
+		render json: params
+		return
+
 		@user_email = params[:useremail]
 
 	end
