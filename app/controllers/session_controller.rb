@@ -1,7 +1,8 @@
 class SessionController < ApplicationController
+skip_before_action :verify_authenticity_token
 
 	require 'rest_client'
-	
+
 	def create 
 		#endpoint = 'https://api.diuit.net/1/auth/nonce'
 
