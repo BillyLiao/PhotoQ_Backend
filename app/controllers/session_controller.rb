@@ -16,7 +16,7 @@ skip_before_action :verify_authenticity_token
 		@user_email = params[:useremail]
 		@user_device_id = params[:userdeviceid]
 
-		render json:@user_email
+		render json:params
 	end
 
 	def show 
