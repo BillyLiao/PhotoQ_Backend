@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get 'push/new'
   post 'push/new'
   get 'push/index'
+  get 'session/show'
 
   match 'session/create', to: 'session#create', via: [:get, :post]
 
