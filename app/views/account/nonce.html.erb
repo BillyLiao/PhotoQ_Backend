@@ -1,0 +1,5 @@
+<form name="main" action="auth" method="post" >
+	<input type='hidden' name="nonce" value="<%=@res%>"/>
+	<input type="submit">
+	<%=token_tag nil%>
+</form>

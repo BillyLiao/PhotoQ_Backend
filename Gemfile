@@ -25,6 +25,7 @@ gem 'parse-ruby-client'
 gem 'rest-client'
 gem 'pg'
 gem 'rails_12factor', group: :production
+gem 'jwt'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

@@ -5,9 +5,11 @@ Rails.application.routes.draw do
   get 'push/new'
   post 'push/new'
   get 'push/index'
-  get 'session/show'
-
   match 'session/create', to: 'session#create', via: [:get, :post]
+
+  get 'account/nonce'
+  match 'account/auth', to: 'account#auth', via: [:get, :post]
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

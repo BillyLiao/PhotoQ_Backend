@@ -1,48 +1,19 @@
-class SessionController < ApplicationController
+class AccountController < ApplicationController
 skip_before_action :verify_authenticity_token
 
-	require 'rest_client'
-	require 'jwt'
-
-	def create 
-		endpoint = 'https://api.diuit.net/1/auth/nonce'
-
-		headers = {
-			'x-diuit-application-id' => '60a3d6ea8105c9426969fd14a2a38845',
-			'x-diuit-api-key' => '724b4289d769d4d7df9af5842fa49e5c'
-		}
-
-		@nonce = RestClient.get(endpoint,headers)
-
-		#@user_email = params[:useremail]
-		#@user_device_id = params[:userdeviceid]
-
-		#render json:params
-
-		exp = Time.now.to_i + 4 * 3600
-		iss = '60a3d6ea8105c9426969fd14a2a38845'
-		iat = Time.now.to_i
-		sub = 'leowang@buylubechemical.com'
-		nce = @nonce
-
-		@hash = {
-			"header" => {
-				"typ" => "JWT",
-				"alg" => "RS256",
-				"cty" => "diuit-eit;v=1",
-				"kid" => "c6e1c6f5402e49ae6db74005bca65c55"
-			},
-
-			"payload" => {
-				"exp" => exp,
-				"iss" => iss,
-				"iat" => iat,
-				"sub" => sub,
-				"nce" => nce
+	def nonce
+		@res = RestClient::Request.execute(
+			method: :get,
+			url: 'https://api.diuit.net/1/auth/nonce',
+			headers: {
+				'x-diuit-application-id' => '60a3d6ea8105c9426969fd14a2a38845',
+				'x-diuit-api-key' => '724b4289d769d4d7df9af5842fa49e5c'
 			}
-		}
+		)
+	end
 
-		rsa_private = "-----BEGIN RSA PRIVATE KEY-----
+	def auth
+		private_key = '
 		MIIEogIBAAKCAQEAh4v/dysivcJWD6gt56nV0Yp3n5XfieVeRvWP8spuxKA5xARLVtYZ0H8W
 		uDxKBcgA9cJSLqTl7Z16pcCueJwyHKLBe5WSuLQt1ay90Tzh1EAglGnruE3DEOl01guakwOd
 		TDKlZ2f7VumTBb95nF6PuXRkN652paqb97Vmc54/Xv8HAtUX4chxwoZHPIORiF6tMc8uW/Ue
@@ -66,31 +37,38 @@ skip_before_action :verify_authenticity_token
 		lcqV7/pAWkhcFOyy5NZXKlav/WHyJ5uyjlAqwnxQj4tUDEnYXhLNYTycMEOi4Gu4dGjpzd5e
 		yOXVpNBoei3oucHqPB7inTAigCAo+y8sJEr6y7O0TkFwQlZDcCbVwZFun/3jPy1CUau68Geh
 		1zM=
-		-----END RSA PRIVATE KEY-----
-		"		
-		@token = JWT.encode @hash, rsa_private
+		'
 
-		render @token
-		post_request ={
-			:headers => {
-				'x-diuit-application-id' => '60a3d6ea8105c9426969fd14a2a38845',
-				'x-diuit-api-key' => '724b4289d769d4d7df9af5842fa49e5c',
-				'Content-Type' => 'application/json'
-			},
-			:data => {
-				"authToken" => @token,
-				"deviceId" => 'A76E985-2BE5-43D5-BABD-B4671734139C'
-			}
+		jwt_header = {
+			"typ" => "JWT",
+			"alg" => "RS256",
+			"cty" => "diuit-eit;v=1",
+			"kid" => "c6e1c6f5402e49ae6db74005bca65c55"
 		}
-		endpoint2 = 'https://api.diuit.net/1/auth/login'
 
-		session_token = RestClient.post(endpoint2,post_request)
+		jwt_payload = {
+			"exp" => Time.now.to_i + 4 * 3600,
+			"iss" => '60a3d6ea8105c9426969fd14a2a38845',
+			"iat" => Time.now.to_i,
+			"sub" => 'leowang@buylubechemical.com',
+			"nce" => params[:nonce]
+		}
 
-		
+		jwt_token = JWT.encode jwt_payload, private_key, "none", jwt_header
 
 
-	end
+		request_payload = {
+			'jwt' => jwt_token,
+			'deviceId' => 'A76E985-2BE5-43D5-BABD-B4671734139C',
+			'platform' => 'ios_sandbox'
+		}
 
-	def show 
+		request_headers = {
+			'x-diuit-application-id' => '60a3d6ea8105c9426969fd14a2a38845',
+			'x-diuit-api-key' => '724b4289d769d4d7df9af5842fa49e5c',
+			'Content-Type' => 'application/json'
+		}
+
+		session_token = RestClient.post('https://api.diuit.net/1/auth/login', request_payload, request_headers)
 	end
 end
