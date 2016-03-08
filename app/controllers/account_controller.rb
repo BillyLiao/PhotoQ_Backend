@@ -88,6 +88,9 @@ yOXVpNBoei3oucHqPB7inTAigCAo+y8sJEr6y7O0TkFwQlZDcCbVwZFun/3jPy1CUau68Geh
 		else
 			@res = {
 				"success" => false
+				data: {
+					"password" => "nil"
+				}
 			}
 		end
 
