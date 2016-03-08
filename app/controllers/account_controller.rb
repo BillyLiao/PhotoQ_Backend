@@ -52,7 +52,7 @@ yOXVpNBoei3oucHqPB7inTAigCAo+y8sJEr6y7O0TkFwQlZDcCbVwZFun/3jPy1CUau68Geh
 			"exp" => Time.at(Time.now.utc.to_i + 4 * 3600).utc.iso8601,
 			"iss" => '60a3d6ea8105c9426969fd14a2a38845',
 			"iat" => Time.now.utc.iso8601,
-			"sub" => 'leowang@buylubechemical.com',
+			"sub" => JSON.parse(params[:userEmail])["userEmail"],
 			"nonce" => JSON.parse(@res)["nonce"]
 		}
 
@@ -61,7 +61,7 @@ yOXVpNBoei3oucHqPB7inTAigCAo+y8sJEr6y7O0TkFwQlZDcCbVwZFun/3jPy1CUau68Geh
 
 		request_data = {
 			'jwt' => jwt_token,
-			'deviceId' => 'A76E985-2BE5-43D5-BABD-B4671734139C',
+			'deviceId' => JSON.parse(params[:deviceId])["deviceID"],
 			'platform' => 'ios_sandbox'
 		}
 
@@ -74,6 +74,22 @@ yOXVpNBoei3oucHqPB7inTAigCAo+y8sJEr6y7O0TkFwQlZDcCbVwZFun/3jPy1CUau68Geh
 		@session_token = RestClient.post 'https://api.diuit.net/1/auth/login', request_data, request_headers
 
 		return @session_token
+	end
+
+	def test 
+		render json:params
+
+		if (params != nil) then 
+			@res = {
+				"success" => true,
+				data: {
+					"password" => "vul3a830"
+				}
+			}
+		end
+
+		return @res.to_json
+
 	end
 
 end

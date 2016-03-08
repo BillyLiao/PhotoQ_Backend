@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   get 'account/nonce'
   match 'account/auth', to: 'account#auth', via: [:get, :post]
 
+  match 'account/test', to: 'account#test', via: [:get, :post]
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
