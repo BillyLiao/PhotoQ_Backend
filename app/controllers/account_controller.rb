@@ -77,7 +77,6 @@ yOXVpNBoei3oucHqPB7inTAigCAo+y8sJEr6y7O0TkFwQlZDcCbVwZFun/3jPy1CUau68Geh
 	end
 
 	def test 
-		render json:params
 
 		if (params != nil) then 
 			@res = {
@@ -85,6 +84,10 @@ yOXVpNBoei3oucHqPB7inTAigCAo+y8sJEr6y7O0TkFwQlZDcCbVwZFun/3jPy1CUau68Geh
 				data: {
 					"password" => "vul3a830"
 				}
+			}
+		else
+			@res = {
+				"success" => false
 			}
 		end
 
