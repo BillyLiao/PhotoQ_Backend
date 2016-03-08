@@ -80,17 +80,14 @@ yOXVpNBoei3oucHqPB7inTAigCAo+y8sJEr6y7O0TkFwQlZDcCbVwZFun/3jPy1CUau68Geh
 
 		if (params != nil) then 
 			@res = {
-				"success" => true,
+				"success" => 1,
 				data: {
 					"password" => "vul3a830"
 				}
 			}
 		else
 			@res = {
-				"success" => false
-				data: {
-					"password" => "nil"
-				}
+				"success" => 0
 			}
 		end
 
