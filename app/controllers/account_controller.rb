@@ -78,6 +78,7 @@ yOXVpNBoei3oucHqPB7inTAigCAo+y8sJEr6y7O0TkFwQlZDcCbVwZFun/3jPy1CUau68Geh
 
 	def test 
 
+		render json:params
 		if (params != nil) then 
 			@res = {
 				"success" => 1,
