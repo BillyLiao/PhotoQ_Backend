@@ -1,6 +1,6 @@
 class AccountController < ApplicationController
 skip_before_action :verify_authenticity_token
-
+respond_to :json
 
 	def auth
 
@@ -81,18 +81,17 @@ yOXVpNBoei3oucHqPB7inTAigCAo+y8sJEr6y7O0TkFwQlZDcCbVwZFun/3jPy1CUau68Geh
 		render json:params
 		if (params != nil) then 
 			@res = {
-				"success" => 1,
 				data: {
 					"password" => "vul3a830"
 				}
 			}
 		else
 			@res = {
-				"success" => 0
+				"password" => "nil"
 			}
 		end
 
-		return @res.to_json
+		respond_with(@res)
 
 	end
 
