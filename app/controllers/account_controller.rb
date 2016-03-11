@@ -78,8 +78,7 @@ yOXVpNBoei3oucHqPB7inTAigCAo+y8sJEr6y7O0TkFwQlZDcCbVwZFun/3jPy1CUau68Geh
 	def test 
 
 		user_info = JSON.parse(params[:objFromDevice])
-		puts user_info
-		puts "fuck"
+
 		@res = {
 			'Billy' => 'is very handsome'
 		}
