@@ -77,17 +77,12 @@ yOXVpNBoei3oucHqPB7inTAigCAo+y8sJEr6y7O0TkFwQlZDcCbVwZFun/3jPy1CUau68Geh
 
 	def test 
 
-		if (params != nil) then 
-			@res = {
-				data: {
-					"password" => "vul3a830"
-				}
-			}
-		else
-			@res = {
-				"password" => "nil"
-			}
-		end
+		user_info = JSON.parse(params[:objFromDevice])
+		puts user_info
+
+		@res = {
+			'Billy' => 'is very handsome'
+		}
 
 		return @res
 	end
